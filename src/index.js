@@ -1,39 +1,29 @@
 import React from 'react'
 import { render } from 'react-dom'
 import App from './App'
-import { createStore } from 'redux'
 import { Provider } from 'react-redux'
+import { createStore, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
 
-const initState = {
-    count: 0,
+
+let initState = {
+    books: []
 }
 
-const rootReducer = (state = initState, action) => {
+const reducer = (state = initState, action) => {
     let { type, payload } = action
-
     switch (type) {
-        case 'INCREMENT':
+        case 'GET_ALL_BOOKS':
             return {
                 ...state,
-                count: state.count + 1
-            }
-        case 'DECREMENT':
-            return {
-                ...state,
-                count: state.count - 1
-            }
-
-        case 'CHANGE_NAME':
-            return {
-                ...state,
-                name: payload
+                books: payload
             }
         default:
             return state
     }
 }
 
-const store = createStore(rootReducer)
+const store = createStore(reducer, applyMiddleware(thunk))
 
 render(
     <Provider store={store}>

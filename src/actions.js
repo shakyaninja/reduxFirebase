@@ -1,11 +1,11 @@
-export const increaseCounter = () => {
-    return { type: 'INCREMENT' }
-}
+import { db } from "./config"
 
-export const decreaseCounter = () => {
-    return { type: 'DECREMENT' }
-}
-
-export const changeName = (payload) => {
-    return { type: 'CHANGE_NAME', payload }
+export const getAllBooks = () => dispatch => {
+    return db.collection('books').get().then(data => {
+        console.log(data)
+        let allBooks = data.docs.map(book => {
+            return book.data()
+        })
+        dispatch({ type: 'GET_ALL_BOOKS', payload: allBooks })
+    })
 }
