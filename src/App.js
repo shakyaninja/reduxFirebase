@@ -88,7 +88,7 @@ export default () => {
             <ul>
                 {
                     books.map((book, i) => {
-                        return <li key={i}>{book.name}</li>
+                        return <li key={i}> {book.name} - {book.author.name} - {book.category.title}</li>
                     })
                 }
             </ul>
